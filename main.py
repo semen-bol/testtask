@@ -23,17 +23,18 @@ async def average_rating_report(csv_data):
     except Exception:
         raise Exception("Invalid data in csvs")
 
+    products = sorted(products, key=lambda x: x.rating, reverse=True)
+
     table_data = []; i = 1
     for product in products:
         table_data.append([i, product.brand, product.rating])
         i += 1
-
     headers = [' ', 'brand', 'rating']
 
     table = tabulate(table_data, headers=headers, tablefmt="grid")
     return table
 
-async def read_csv_files(file_paths: List[str]) -> List[Product]:
+async def read_csv_files(file_paths: List[str]) -> List:
     products = []
 
     for file_path in file_paths:
